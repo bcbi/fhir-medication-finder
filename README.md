@@ -1,6 +1,6 @@
-# fhir-patient-finder
+# fhir-patient-finder-eunomia
 
-This is a proof-of-concept FHIR web application written in Python and using Flask as the backend. 
+This is a FHIR web application written in Python and using Flask as the backend. 
 
 ## 1. Dependencies
 This app depends on Python 3 and a few Python packages outlined in the `requirements.txt` file. 
