@@ -13,31 +13,29 @@ load_dotenv()
 username = os.getenv("FHIR_USERNAME")
 password = os.getenv("FHIR_PASSWORD")
 
-def request_patient(patient_id, credentials):
+def request_medication_list(patient_id, credentials):
+    # Use the MedicationRequest or MedicationStatement resource to retrieve medication information.
+    req = requests.get(FHIR_SERVER_BASE_URL + f"/MedicationRequest?patient={patient_id}", auth=credentials)
 
-    req = requests.get(FHIR_SERVER_BASE_URL + "/Patient/" + str(patient_id), auth = credentials)
-    
-    print(f"Requests status: {req.status_code}")
+    print(f"Request status: {req.status_code}")
 
     response = req.json()
     print(response.keys())
-
+    
     return response
-
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index_eu():
-    
     result = None
     credentials = (username, password)
 
     if request.method == 'POST':
         try:
-            number = int(request.form['number'])
-            result = request_patient(number, credentials=credentials)
+            patient_id = request.form['patient_id']
+            result = request_medication_list(patient_id, credentials=credentials)
         except ValueError:
-            result = 'Invalid input. Please enter a number.'
+            result = 'Invalid input. Please enter a patient ID.'
 
     return render_template('index.html', result=result)
 
