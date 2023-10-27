@@ -14,7 +14,7 @@ username = os.getenv("FHIR_USERNAME")
 password = os.getenv("FHIR_PASSWORD")
 
 def request_medication_list(patient_id, credentials):
-    # Use the MedicationRequest or MedicationStatement resource to retrieve medication information.
+
     req = requests.get(FHIR_SERVER_BASE_URL + f"/MedicationRequest?patient={patient_id}", auth=credentials)
 
     print(f"Request status: {req.status_code}")
