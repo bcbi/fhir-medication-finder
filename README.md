@@ -1,4 +1,4 @@
-# fhir-patient-finder-eunomia
+# fhir-medication-finder-eunomia
 
 This is a FHIR web application written in Python and using Flask as the backend. 
 
