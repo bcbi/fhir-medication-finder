@@ -16,7 +16,6 @@
         {% if result.patient.entry is not none %}
             <div class="patient-info">
                 <h3>Patient Information:</h3>
-                <p>Today's Date: {{ result.patient.current_date }}</p>
                 <p>Name: {{ result.patient.name[0]['given'][0] }} {{ result.patient.name[0]['family'] }}</p>
                 <p>Gender: {{ result.patient.gender }}</p>
                 <p>Date of Birth: {{ result.patient.birthDate }}</p>
@@ -40,7 +39,7 @@
                     {% for entry in result.medication_request.entry %}
                         <tr>
                             <td>{{ entry.resource.medicationCodeableConcept.coding[0].display }}</td>
-                            <td>{{ entry.resource.authoredOn }}</td>
+                            <td>{{ entry.resource.authoredOn[:10] }}</td>
                             <td>{{ entry.resource.dispenseRequest.expectedSupplyDuration.value }} {{ entry.resource.dispenseRequest.expectedSupplyDuration.unit }}</td>
                             <td>{{ entry.resource.dispenseRequest.quantity.value }} {{ entry.resource.dispenseRequest.quantity.unit }}</td>
                             <td>{{ entry.resource.dispenseRequest.numberOfRepeatsAllowed }}</td>
