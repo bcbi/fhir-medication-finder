@@ -2,35 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Medication List</title>
+    <title>Medication Table</title>
 </head>
 <body>
     <div class="container">
-        <h1>Medication List</h1>
+        <h1 style="text-align:center;">Provider Medical Statement</h1>
         <form method="post">
             <label for="patient_id">Enter a patient ID:</label>
             <input type="text" name="patient_id" id="patient_id">
-            <input type="submit" value="Get Medication List">
+            <input type="submit" value="Get Medication Table">
         </form>
-        {% if result is not none %}
-            <h3>Medication List:</h3>
-            <ul>
-                {% for entry in result.entry %}
-                    <li>{{ entry.resource.medicationCodeableConcept.coding[0].display }}</li>
-                {% endfor %}
-            </ul>
+
+        {% if result.patient.entry is not none %}
+            <div class="patient-info">
+                <h3>Patient Information:</h3>
+                <p>Today's Date: {{ result.patient.current_date }}</p>
+                <p>Name: {{ result.patient.name[0]['given'][0] }} {{ result.patient.name[0]['family'] }}</p>
+                <p>Gender: {{ result.patient.gender }}</p>
+                <p>Date of Birth: {{ result.patient.birthDate }}</p>
+            </div>
         {% endif %}
+
+        <div class="medication-table">
+            <h3>Medication Table</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Medication</th>
+                        <th>Authored Date</th>
+                        <th>Duration</th>
+                        <th>Quantity</th>
+                        <th>Number of Repeats Allowed</th>
+                        <!-- Add more headers as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in result.medication_request.entry %}
+                        <tr>
+                            <td>{{ entry.resource.medicationCodeableConcept.coding[0].display }}</td>
+                            <td>{{ entry.resource.authoredOn }}</td>
+                            <td>{{ entry.resource.dispenseRequest.expectedSupplyDuration.value }} {{ entry.resource.dispenseRequest.expectedSupplyDuration.unit }}</td>
+                            <td>{{ entry.resource.dispenseRequest.quantity.value }} {{ entry.resource.dispenseRequest.quantity.unit }}</td>
+                            <td>{{ entry.resource.dispenseRequest.numberOfRepeatsAllowed }}</td>
+                            <!-- Add more columns as needed -->
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
 
-
-
 <style>
     .container {
         display: grid;
-        place-items: center;
+        place-items: start;
+    }
+
+    .patient-info,
+    .medication-table {
+        width: 100%; /* Occupy full width */
+        max-width: 600px; /* Adjust the maximum width as needed */
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        white-space: nowrap; /* Prevent text wrapping */
+    }
+
+    th {
+        background-color: #f2f2f2;
     }
 </style>
-
-
