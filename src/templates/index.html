@@ -6,7 +6,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 style="text-align:center;">Provider Medical Statement</h1>
+        <h1>Provider Medical Statement</h1>
         <form method="post">
             <label for="patient_id">Enter a patient ID:</label>
             <input type="text" name="patient_id" id="patient_id">
@@ -39,7 +39,7 @@
                     {% for entry in result.medication_request.entry %}
                         <tr>
                             <td>{{ entry.resource.medicationCodeableConcept.coding[0].display }}</td>
-                            <td>{{ entry.resource.authoredOn[:10] }}</td>
+                            <td>{{ entry.resource.authoredOn }}</td>
                             <td>{{ entry.resource.dispenseRequest.expectedSupplyDuration.value }} {{ entry.resource.dispenseRequest.expectedSupplyDuration.unit }}</td>
                             <td>{{ entry.resource.dispenseRequest.quantity.value }} {{ entry.resource.dispenseRequest.quantity.unit }}</td>
                             <td>{{ entry.resource.dispenseRequest.numberOfRepeatsAllowed }}</td>
@@ -56,13 +56,13 @@
 <style>
     .container {
         display: grid;
-        place-items: start;
+        place-items: start; /* Align content to the start (left) */
     }
 
     .patient-info,
     .medication-table {
-        width: 100%; /* Occupy full width */
-        max-width: 600px; /* Adjust the maximum width as needed */
+        width: 100%;
+        max-width: 600px;
         margin-bottom: 20px;
     }
 
