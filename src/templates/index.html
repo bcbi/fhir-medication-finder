@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Medication Table</title>
+    <title>Medication and Condition Table</title>
 </head>
 <body>
     <div class="container">
@@ -10,45 +10,77 @@
         <form method="post">
             <label for="patient_id">Enter a patient ID:</label>
             <input type="text" name="patient_id" id="patient_id">
-            <input type="submit" value="Get Medication Table">
+            <input type="submit" value="Get Medication and Condition Tables">
         </form>
 
-        {% if result.patient.entry is not none %}
-            <div class="patient-info">
-                <h3>Patient Information:</h3>
-                <p>Name: {{ result.patient.name[0]['given'][0] }} {{ result.patient.name[0]['family'] }}</p>
-                <p>Gender: {{ result.patient.gender }}</p>
-                <p>Date of Birth: {{ result.patient.birthDate }}</p>
-            </div>
-        {% endif %}
+        {% if result %}
+            {% if result.patient %}
+                <div class="patient-info">
+                    <h3>Patient Information:</h3>
+                    <p>Name: {{ result.patient.name[0]['given'][0] }} {{ result.patient.name[0]['family'] }}</p>
+                    <p>Gender: {{ result.patient.gender }}</p>
+                    <p>Date of Birth: {{ result.patient.birthDate }}</p>
+                </div>
+            {% endif %}
 
-        <div class="medication-table">
-            <h3>Medication Table</h3>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Medication</th>
-                        <th>Authored Date</th>
-                        <th>Duration</th>
-                        <th>Quantity</th>
-                        <th>Number of Repeats Allowed</th>
-                        <!-- Add more headers as needed -->
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entry in result.medication_request.entry %}
-                        <tr>
-                            <td>{{ entry.resource.medicationCodeableConcept.coding[0].display }}</td>
-                            <td>{{ entry.resource.authoredOn }}</td>
-                            <td>{{ entry.resource.dispenseRequest.expectedSupplyDuration.value }} {{ entry.resource.dispenseRequest.expectedSupplyDuration.unit }}</td>
-                            <td>{{ entry.resource.dispenseRequest.quantity.value }} {{ entry.resource.dispenseRequest.quantity.unit }}</td>
-                            <td>{{ entry.resource.dispenseRequest.numberOfRepeatsAllowed }}</td>
-                            <!-- Add more columns as needed -->
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            {% if result.medication_request %}
+                <div class="medication-table">
+                    <h3>Medication Table</h3>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Medication</th>
+                                <th>Authored Date</th>
+                                <th>Duration</th>
+                                <th>Quantity</th>
+                                <th>Number of Repeats Allowed</th>
+                                <!-- Add more headers as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in result.medication_request.entry %}
+                                <tr>
+                                    <td>{{ entry.resource.medicationCodeableConcept.coding[0].display }}</td>
+                                    <td>{{ entry.resource.authoredOn }}</td>
+                                    <td>{{ entry.resource.dispenseRequest.expectedSupplyDuration.value }} {{ entry.resource.dispenseRequest.expectedSupplyDuration.unit }}</td>
+                                    <td>{{ entry.resource.dispenseRequest.quantity.value }} {{ entry.resource.dispenseRequest.quantity.unit }}</td>
+                                    <td>{{ entry.resource.dispenseRequest.numberOfRepeatsAllowed }}</td>
+                                    <!-- Add more columns as needed -->
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+
+            {% if result.condition %}
+                <div class="condition-table">
+                    <h3>Condition Table</h3>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Condition</th>
+                                <th>Onset Date</th>
+                                <th>Abatement Date</th>
+                                <!-- Add more headers as needed -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in result.condition.entry %}
+                                <tr>
+                                    <td>{{ entry.resource.code.coding[0].display }}</td>
+                                    <td>{{ entry.resource.onsetDateTime }}</td>
+                                    <td>{{ entry.resource.abatementDateTime }}</td>
+                                    <!-- Add more columns as needed -->
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        {% else %}
+            <p>No results available.</p>
+        {% endif %}
     </div>
 </body>
 </html>
@@ -60,7 +92,8 @@
     }
 
     .patient-info,
-    .medication-table {
+    .medication-table,
+    .condition-table {
         width: 100%;
         max-width: 600px;
         margin-bottom: 20px;
