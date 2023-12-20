@@ -41,7 +41,7 @@
                             {% for entry in result.medication_request.entry %}
                                 <tr>
                                     <td>{{ entry.resource.medicationCodeableConcept.coding[0].display }}</td>
-                                    <td>{{ entry.resource.authoredOn }}</td>
+                                    <td>{{ entry.resource.authoredOn.split('T')[0] }}</td>
                                     <td>{{ entry.resource.dispenseRequest.expectedSupplyDuration.value }} {{ entry.resource.dispenseRequest.expectedSupplyDuration.unit }}</td>
                                     <td>{{ entry.resource.dispenseRequest.quantity.value }} {{ entry.resource.dispenseRequest.quantity.unit }}</td>
                                     <td>{{ entry.resource.dispenseRequest.numberOfRepeatsAllowed }}</td>
@@ -69,8 +69,14 @@
                             {% for entry in result.condition.entry %}
                                 <tr>
                                     <td>{{ entry.resource.code.coding[0].display }}</td>
-                                    <td>{{ entry.resource.onsetDateTime }}</td>
-                                    <td>{{ entry.resource.abatementDateTime }}</td>
+                                    <td>{{ entry.resource.onsetDateTime.split('T')[0] }}</td>
+                                    <td>
+                                        {% if 'abatementDateTime' in entry.resource %}
+                                            {{ entry.resource.abatementDateTime.split('T')[0] }}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </td>
                                     <!-- Add more columns as needed -->
                                 </tr>
                             {% endfor %}
