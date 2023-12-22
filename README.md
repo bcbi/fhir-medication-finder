@@ -1,6 +1,6 @@
 # fhir-medication-finder-eunomia
 
-This is a FHIR web application written in Python and using Flask as the backend. It can produce a medication table and patient information.
+This is a FHIR web application written in Python and using Flask as the backend. It can produce a medication table and patient information and condition table.
 
 ## 1. Dependencies
 This app depends on Python 3 and a few Python packages outlined in the `requirements.txt` file. 
