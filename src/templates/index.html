@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Medication and Condition Table</title>
+    <link rel="stylesheet" href="styling.css">
 </head>
 <body>
     <div class="container">
@@ -10,7 +11,7 @@
         <form method="post">
             <label for="patient_id">Enter a patient ID:</label>
             <input type="text" name="patient_id" id="patient_id">
-            <input type="submit" value="Get Medication and Condition Tables">
+            <input type="submit" value="Get the patient info">
         </form>
 
         {% if result %}
@@ -84,40 +85,71 @@
                     </table>
                 </div>
             {% endif %}
+
+            {% if result.observation %}
+            <div class="observation-table">
+                <h3>Observation Table</h3>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Observation</th>
+                            <th>Effective Date</th>
+                            <!-- Add more headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in result.observation.entry %}
+                            <tr>
+                                <td>{{ entry.resource.code.coding[0].display }}</td>
+                                <td>
+                                    {% if 'effectiveDateTime' in entry.resource %}
+                                        {{ entry.resource.effectiveDateTime.split('T')[0] }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <!-- Add more columns as needed -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        {% if result.procedure %}
+        <div class="procedure-table">
+            <h3>Procedure Table</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Procedure</th>
+                        <th>Performed Date</th>
+                        <!-- Add more headers as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in result.procedure.entry %}
+                        <tr>
+                            <td>{{ entry.resource.code.coding[0].display }}</td>
+                            <!-- <td>{{ entry.resource.performedDateTime.split('T')[0] }}</td> -->
+                            <td>
+                                {% if 'performedDateTime' in entry.resource %}
+                                    {{ entry.resource.performedDateTime.split('T')[0] }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <!-- Add more columns as needed -->
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
         {% else %}
             <p>No results available.</p>
         {% endif %}
     </div>
 </body>
 </html>
-
-<style>
-    .container {
-        display: grid;
-        place-items: start; /* Align content to the start (left) */
-    }
-
-    .patient-info,
-    .medication-table,
-    .condition-table {
-        width: 100%;
-        max-width: 600px;
-        margin-bottom: 20px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    th, td {
-        padding: 10px;
-        text-align: left;
-        white-space: nowrap; /* Prevent text wrapping */
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-</style>

@@ -46,3 +46,27 @@ def request_condition_list(patient_id, credentials):
     print(condition_response.keys())
     
     return condition_response
+
+def request_observation_list(patient_id, credentials):
+    observation_url = f"{FHIR_SERVER_BASE_URL}/Observation?patient={patient_id}"
+    observation_req = requests.get(observation_url, auth=credentials)
+    
+    print(f"Observation status: {observation_req.status_code}")
+    
+    observation_response = observation_req.json()
+    
+    print(observation_response.keys())
+    
+    return observation_response
+
+def request_procedure_list(patient_id, credentials):
+    procedure_url = f"{FHIR_SERVER_BASE_URL}/Procedure?patient={patient_id}"
+    procedure_req = requests.get(procedure_url, auth=credentials)
+    
+    print(f"Observation status: {procedure_req.status_code}")
+    
+    procedure_response = procedure_req.json()
+    
+    print(procedure_response.keys())
+    
+    return procedure_response
