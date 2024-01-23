@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 from dotenv import load_dotenv
 from fhir_utils import get_fhir_credentials, request_medication_list, request_condition_list, request_observation_list, request_procedure_list
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 load_dotenv()
 

@@ -1,0 +1,68 @@
+.container {
+    display: grid;
+    place-items: start;
+}
+
+h1 {
+    color: #333; /* Dark color for the header text */
+}
+
+/* form {
+    background-color: #fff;
+    padding: 20px;
+} */
+
+input[type="text"] {
+    padding: 10px;
+    margin-right: 10px;
+}
+
+/* Apply styling to tables directly */
+.medication-table,
+.condition-table,
+.observation-table,
+.procedure-table {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.medication-table table,
+.condition-table table,
+.observation-table table,
+.procedure-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #e0f7fa; /* Light blue background for result sections */
+    padding: 20px; /* Add padding for better visual separation */
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+th {
+    background-color: #ffd54f;
+}
+
+/* Add specific background colors for different result sections */
+.medication-table table {
+    background-color: #fce4ec; /* Light pink background for medication table */
+}
+
+.condition-table table {
+    background-color: #c8e6c9; /* Light green background for condition table */
+}
+
+.observation-table table {
+    background-color: #bce5f2; /* Amber background for observation table */
+}
+
+.procedure-table table {
+    background-color: #d1c4e9; /* Light purple background for procedure table */
+}
+
+/* Add other color styles as needed */
