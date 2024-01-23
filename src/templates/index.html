@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Medication and Condition Table</title>
-    <link rel="stylesheet" href="styling.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styling1.css') }}">
 </head>
 <body>
     <div class="container">
@@ -21,6 +21,53 @@
                     <p>Name: {{ result.patient.name[0]['given'][0] }} {{ result.patient.name[0]['family'] }}</p>
                     <p>Gender: {{ result.patient.gender }}</p>
                     <p>Date of Birth: {{ result.patient.birthDate }}</p>
+
+                     <!-- Blank Fields -->
+                    <label for="date">Date</label>
+                    <input type="text" id="date" name="date">
+                    
+                    <label for="last_office_visit">Date of Last Office Visit</label>
+                    <input type="text" id="last_office_visit" name="last_office_visit">
+
+                    <label for="ssn_mid">SS# or MID</label>
+                    <input type="text" id="ssn_mid" name="ssn_mid">
+
+                    <label for="gender">Gender (circle):</label>
+                    <input type="radio" id="male" name="gender" value="Male">
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="Female">
+                    <label for="female">Female</label>
+
+                    <label for="address">Address</label>
+                    <input type="text" id="address" name="address">
+
+                    <label for="apt_floor">Apt./Floor</label>
+                    <input type="text" id="apt_floor" name="apt_floor">
+
+                    <label for="city_town">City/Town</label>
+                    <input type="text" id="city_town" name="city_town">
+
+                    <label for="state">State</label>
+                    <input type="text" id="state" name="state">
+
+                    <label for="zip_code">Zip Code</label>
+                    <input type="text" id="zip_code" name="zip_code">
+
+                    <label for="living_arrangement">Current Living Arrangement (circle one):</label>
+                    <input type="radio" id="lives_alone" name="living_arrangement" value="Lives Alone">
+                    <label for="lives_alone">Lives Alone</label>
+                    <input type="radio" id="lives_with_others" name="living_arrangement" value="Lives with Others">
+                    <label for="lives_with_others">Lives with Others</label>
+                    <input type="radio" id="other" name="living_arrangement" value="Other">
+                    <label for="other">Other:</label>
+                    <input type="text" id="other_arrangement" name="other_arrangement">
+
+                    <label for="facility_name">Name of Facility</label>
+                    <input type="text" id="facility_name" name="facility_name">
+
+                    <label for="admitted_date">Date Admitted</label>
+                    <input type="text" id="admitted_date" name="admitted_date">
+
                 </div>
             {% endif %}
 
