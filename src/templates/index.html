@@ -4,20 +4,44 @@
     <meta charset="UTF-8">
     <title>Medication and Condition Table</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styling1.css') }}">
+    <!-- <script src="script.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+    function generatePDF() {
+        var element = document.getElementById("container");
+        var opt = {
+            margin:       1,
+            filename:     'PMform_' + '.pdf',
+            image:        { type: 'jpeg', quality: 1 },
+            html2canvas:  { scale: 1 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        // Choose the element that our invoice is rendered in.
+        html2pdf(element).set(opt).from(page).save();
+    }
+    </script>
+
 </head>
 <body>
-    <div class="container">
+
+
+
+    <div class="container" id="container">
         <h1>Provider Medical Statement</h1>
         <form method="post">
             <label for="patient_id">Enter a patient ID:</label>
             <input type="text" name="patient_id" id="patient_id">
             <input type="submit" value="Get the patient info">
-        </form>
+        </form>&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <!-- Button to open the page in a new tab for printing -->
+        <button onclick="generatePDF()">Download PDF</button>
 
         {% if result %}
             {% if result.patient %}
                 <div class="patient-info">
                     <h3>Patient Information:</h3>
+                    <p>Patient ID: {{ result.patient.id }}</p>
                     <p>Name: {{ result.patient.name[0]['given'][0] }} {{ result.patient.name[0]['family'] }}</p>
                     <p>Gender: {{ result.patient.gender }}</p>
                     <p>Date of Birth: {{ result.patient.birthDate }}</p>
@@ -198,5 +222,8 @@
             <p>No results available.</p>
         {% endif %}
     </div>
+    
 </body>
 </html>
+
+
