@@ -22,6 +22,7 @@ After the above steps, we should be able to launch our app using the following c
 
 ```
 python3 src/app.py # for the patient finder app
+
 python3 src/condition_finder.py # for the condition app
 ```
 
